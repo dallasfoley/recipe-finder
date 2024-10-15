@@ -1,4 +1,5 @@
-type RecipeInstructions = {
+export type Recipe = {
+  id: string;
   title: string;
   image: string;
   readyInMinutes: number;
@@ -7,15 +8,8 @@ type RecipeInstructions = {
   extendedIngredients: Ingredient[];
 };
 
-type Ingredient = {
+export type Ingredient = {
   name: string;
   amount: number;
   unit: string;
-  original: string;
-};
-
-type Recipe = {
-  id: number;
-  title: string;
-  image: string;
 };

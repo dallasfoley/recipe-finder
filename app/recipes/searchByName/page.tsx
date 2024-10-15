@@ -1,3 +1,4 @@
+import { Recipe } from "@/app/lib/definitions";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,18 +16,15 @@ type Props = {
 
 export default async function ResultsPage({ searchParams }: Props) {
   const { query, numOfRecipes } = searchParams;
-  console.log("name: ", query);
+
   const fetchRecipes = async () => {
     const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=${numOfRecipes}&apiKey=${process.env.API_KEY}`;
-    console.log("apiUrl: ", apiUrl);
     try {
       const res = await fetch(apiUrl);
       if (!res.ok) {
-        console.log(res);
         throw new Error("Failed to fetch recipes");
       }
       const data = await res.json();
-      console.log("data.results: ", data.results);
       return data.results as Recipe[];
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -34,38 +32,36 @@ export default async function ResultsPage({ searchParams }: Props) {
     }
   };
 
-  // Call the fetch function and handle the result
   const recipes = await fetchRecipes();
 
   return (
-    <div className="min-h-screen flex flex-col items-center">
-      <h1 className="text-2xl md:text-4xl font-semibold my-8">
+    <div className="min-h-screen px-4 md:px-8 lg:px-16 py-8 flex flex-col items-center">
+      <h1 className="text-3xl md:text-5xl font-bold my-10 text-center">
         Recipe Results
       </h1>
-      <ul className="flex flex-col gap-8">
+      <ul className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {recipes && recipes.length > 0 ? (
           recipes.map((recipe) => (
             <li
               key={recipe.id}
-              className="p-4 flex flex-col items-center gap-8 border-b border-gray-300"
+              className="p-4 flex flex-col items-center gap-4 border border-gray-200 shadow-lg rounded-lg transition-transform transform hover:scale-105"
             >
-              <Link href={`/recipes/searchByName/${recipe.id}`}>
-                <h3 className="text-xl text-center font-semibold transition duration-300 ease-in-out hover:scale-110">
-                  {recipe.title}
-                </h3>
-              </Link>
-
               <Image
                 src={recipe.image}
                 alt={recipe.title}
                 width={300}
                 height={300}
-                className="m-8"
+                className="rounded-lg shadow-md"
               />
+              <Link href={`/recipes/searchByName/${recipe.id}`}>
+                <h3 className="text-lg font-semibold text-center transition-colors hover:text-blue-600">
+                  {recipe.title}
+                </h3>
+              </Link>
             </li>
           ))
         ) : (
-          <p className="text-center">
+          <p className="text-red-500 text-lg font-semibold">
             No recipes found or an error occurred while fetching data.
           </p>
         )}
