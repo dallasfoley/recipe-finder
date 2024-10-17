@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import NavBar from "./ui/navbar";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,17 +20,19 @@ export const metadata: Metadata = {
   description: "Find a recipe based on ingredients or title.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { isAuthenticated } = getKindeServerSession();
+  const authenticated = await isAuthenticated();
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-900 min-h-screen`}
       >
-        <NavBar />
+        <NavBar authenticated={authenticated} />
         {children}
       </body>
     </html>

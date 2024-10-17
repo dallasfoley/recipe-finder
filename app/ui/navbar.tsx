@@ -1,4 +1,5 @@
-import Link from "next/link";
+"use client";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
@@ -6,11 +7,16 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { useRouter } from "next/navigation";
 
-const NavBar = async () => {
-  const { isAuthenticated } = getKindeServerSession();
-  const authenticated = (await isAuthenticated()) ? true : false;
+const NavBar = ({ authenticated }: { authenticated: boolean }) => {
+  const router = useRouter();
+  const handleHomeClick = () => {
+    router.push("/"); // Navigate to the home page
+  };
+  const handleSavedRecipesClick = () => {
+    router.push("/recipes/saved"); // Navigate to the saved recipes page
+  };
 
   return (
     <div className="flex justify-between items-center bg-zinc-800">
@@ -37,8 +43,21 @@ const NavBar = async () => {
             />
           </LoginLink>
         )}
-
-        <Link
+        <button
+          onClick={handleHomeClick}
+          title="Home"
+          className="transition duration-300 ease-in-out hover:-translate-y-2 hover:text-red-500"
+        >
+          <FontAwesomeIcon icon={faHouse} className="text-2xl md:text-4xl" />
+        </button>
+        <button
+          onClick={handleSavedRecipesClick}
+          className="transition duration-300 ease-in-out hover:-translate-y-2 hover:text-red-500"
+          title="Saved Recipes"
+        >
+          <FontAwesomeIcon icon={faUtensils} className="text-2xl md:text-4xl" />
+        </button>
+        {/* <Link
           href="/"
           title="Home"
           className="transition duration-300 ease-in-out hover:-translate-y-2 hover:text-red-500"
@@ -51,7 +70,7 @@ const NavBar = async () => {
           title="Saved Recipes"
         >
           <FontAwesomeIcon icon={faUtensils} className="text-2xl md:text-4xl" />
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
