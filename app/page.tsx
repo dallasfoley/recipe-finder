@@ -25,6 +25,13 @@ export default function Home() {
         >
           Search for a recipe by ingredients
         </Link>
+        <Link
+          href="/search/chatbot"
+          className="bg-blue-600 w-64 h-12 rounded-lg flex justify-center items-center
+           transition duration-300 ease-in-out hover:scale-110 hover:bg-blue-900"
+        >
+          Prompt an AI Chatbot
+        </Link>
       </div>
     </main>
   );
