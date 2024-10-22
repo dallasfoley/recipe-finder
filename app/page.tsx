@@ -6,9 +6,9 @@ export default function Home() {
       <h1 className="text-center text-3xl md:text-5xl font-semibold">
         Welcome to Recipe Finder
       </h1>
-      <h4 className="text-center text-2xl md:text-4xl font-semibold m-16">
-        You can search for a dish&apos;s recipe by the dish&apos;s name or by
-        it&apos;s ingredients
+      <h4 className="text-center text-2xl md:text-4xl font-semibold m-16 mx-32">
+        You can search for a recipe by dish name, ingredients, or ask an AI
+        chatbot for help
       </h4>
       <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
         <Link

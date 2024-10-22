@@ -31,7 +31,6 @@ export default async function ResultsPage({ searchParams }: Props) {
     const fullQuery = `${text}`.replace(/ /g, "+");
     const apiUrl = `https://api.spoonacular.com/food/converse?text=${fullQuery}&apiKey=${process.env.API_KEY}`;
     try {
-      console.log("api url: ", apiUrl);
       const res = await fetch(apiUrl);
       if (!res.ok) {
         throw new Error("Failed to fetch recipes");
